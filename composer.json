@@ -1,0 +1,16 @@
+{
+    "name": "wilder9/quete_simple_mvc",
+    "authors": [
+        {
+            "name": "Thierry STOLLSTEINER",
+            "email": "stollsteiner.thierry@hotmail.fr"
+        }
+    ],
+    "require": {},
+
+    "autoload": {
+    "psr-4": {
+        "": "src/"
+             }
+     }
+}
