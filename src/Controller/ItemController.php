@@ -6,17 +6,11 @@
  * Time: 17:59
  */
 
-
 namespace Controller;
-
 use Model\ItemManager;
-
-
-
 
 class ItemController
 {
-
 
     public function index()
 
@@ -29,7 +23,10 @@ class ItemController
 
     }
 
-
-
-
+    public function show($id)
+    {
+        $itemManager= new ItemManager();
+        $item=$itemManager->selectOneItem($id);
+        require __DIR__ . '/../View/showItem.php';
+    }
 }
