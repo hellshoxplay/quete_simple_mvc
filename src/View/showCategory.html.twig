@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+
+{% block title %}On veux voir la catégorie en détail ! {% endblock %}
+
+{% block content %}
+<main>
+    <h1>Item : {{ category.categoryName }}</h1>
+    <ul>
+        <li>Id : {{ category.idcategory}}</li>
+    </ul>
+    <a href='../categories'>Back to list</a>
+</main>
+{% endblock %}
