@@ -7,30 +7,62 @@
  */
 
 namespace Model;
+use Model\Item;
+
+class ItemManager extends AbstractManager
+{
+    /**
+     *
+     */
+    const TABLE = 'item';
 
 
-class ItemManager{
-
-// récupération de tous les items
-     public function selectAllItems() :array
+    /**
+     * ItemManager constructor.
+     * @param \PDO $pdo
+     */
+    public function __construct(\PDO $pdo)
     {
-        $pdo = new \PDO(DSN, USER, PASS);
-        $query = "SELECT * FROM item";
-        $res = $pdo->query($query);
-        return $res->fetchAll();
+        parent::__construct(self::TABLE,$pdo);
     }
 
-    // la méthode prend l'id en paramètre
-
-    public function selectOneItem(int $id) : array
+    /**
+     * @param \Model\Item $item
+     * @return int
+     */
+    public function insert(Item $item): int
     {
-        $pdo = new \PDO(DSN, USER, PASS);
-        $query = "SELECT * FROM item WHERE id = :id";
-        $statement = $pdo->prepare($query);
-        $statement->bindValue(':id', $id, \PDO::PARAM_INT);
+        $statement = $this->pdo->prepare("INSERT INTO " . self::TABLE . " (`title`) VALUES (:title)");
+        $statement->bindValue('title', $item->getTitle(), \PDO::PARAM_STR);
+        if ($statement->execute()) {
+            return $this->pdo->lastInsertId();
+        }
+    }
+
+    /**
+     * @param \Model\Item $item
+     * @return int
+     */
+    public function update(Item $item):int
+    {
+
+        // prepared request
+        $statement = $this->pdo->prepare("UPDATE $this->table SET `title` = :title WHERE id=:id");
+        $statement->bindValue('id', $item->getId(), \PDO::PARAM_INT);
+        $statement->bindValue('title', $item->getTitle(), \PDO::PARAM_STR);
+
+
+        return $statement->execute();
+    }
+    /**
+     * @param int $id
+     */
+    public function delete(int $id): void
+    {
+        // prepared request
+        $statement = $this->pdo->prepare("DELETE FROM $this->table WHERE id=:id");
+        $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
-        // contrairement à fetchAll(), fetch() ne renvoie qu'un seul résultat
-        return $statement->fetch();
     }
 
 }

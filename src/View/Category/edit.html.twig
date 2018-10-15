@@ -1,0 +1,11 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <h1>Edit item {{ category.title }}</h1>
+    <form method="post">
+        <input type="hidden" value="{{ category.id }}" name="id">
+        <input type="text" value="{{ category.title }}" name="title">
+        <input type="submit" value="Valider">
+    </form>
+    <a href="/category/{{ category.id }}">Back</a>
+{% endblock %}

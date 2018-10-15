@@ -1,0 +1,14 @@
+{% extends 'layout.html.twig' %}
+
+
+{% block title %}Ajout d'une catégorie{% endblock %}
+
+{% block content %}
+    <h1>Add a new Category</h1>
+    <form method="post">
+        <input type="hidden" value="{{ category.id }}" name="id">
+        <input type="text" value="{{ category.title }}" name="title">
+        <input type="submit" value="Valider">
+    </form>
+    <a href="../items">Retour à la liste</a>
+{% endblock %}

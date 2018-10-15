@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+
+
+{% block title %}Ajout d'un item{% endblock %}
+
+{% block content %}
+    <h1>Ajout d'un item</h1>
+    <form method="post">
+        <input type="hidden" value="{{ item.id }}" name="id">
+        <input type="text" value="{{ item.title }}" name="title">
+        <input type="submit" value="Valider">
+    </form>
+    <a href="\">Retour aux items</a>
+{% endblock %}
