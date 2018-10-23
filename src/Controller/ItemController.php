@@ -75,12 +75,17 @@ class ItemController extends AbstractController
      */
     public function edit(int $id): string
     {
-        $itemManager = new ItemManager($this->getPdo());
-        $item = $itemManager->selectOneById($id);
+        if (!empty($_POST)) {
+            // TODO : validations des valeurs saisies dans le form
+            // création d'un nouvel objet Item et hydratation avec les données du formulaire
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $item->setTitle($_POST['title']);
-            $itemManager->update($item);
+            $itemManager = new ItemManager($this->getPdo());
+            $item = $itemManager->selectOneById($id);
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $item->setTitle($_POST['title']);
+                $itemManager->update($item);
+            }
         }
 
         return $this->twig->render('Item/edit.html.twig', ['item' => $item]);
@@ -91,9 +96,14 @@ class ItemController extends AbstractController
      */
     public function delete(int $id)
     {
-        $itemManager = new ItemManager($this->getPdo());
-        $itemManager->delete($id);
-        header('Location:/');
+        if (!empty($_POST)) {
+            // TODO : validations des valeurs saisies dans le form
+            // création d'un nouvel objet Item et hydratation avec les données du formulaire
+
+            $itemManager = new ItemManager($this->getPdo());
+            $itemManager->delete($id);
+            header('Location:/');
+        }
     }
 }
 

@@ -56,12 +56,17 @@ class CategoryController extends AbstractController
 
     public function edit(int $id): string
     {
-        $categoryManager = new CategoryManager($this->getPdo());
-        $category = $categoryManager->selectOneById($id);
+        if (!empty($_POST)) {
+            // TODO : validations des valeurs saisies dans le form
+            // création d'un nouvel objet Item et hydratation avec les données du formulaire
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $category->setTitle($_POST['title']);
-            $categoryManager->update($category);
+            $categoryManager = new CategoryManager($this->getPdo());
+            $category = $categoryManager->selectOneById($id);
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $category->setTitle($_POST['title']);
+                $categoryManager->update($category);
+            }
         }
 
         return $this->twig->render('Category/edit.html.twig', ['category' => $category]);
@@ -71,9 +76,15 @@ class CategoryController extends AbstractController
      */
     public function delete(int $id)
     {
-        $categoryManager = new CategoryManager($this->getPdo());
-        $categoryManager->delete($id);
-        header('Location:/categories');
+        if (!empty($_POST)) {
+            // TODO : validations des valeurs saisies dans le form
+            // création d'un nouvel objet Item et hydratation avec les données du formulaire
+
+
+            $categoryManager = new CategoryManager($this->getPdo());
+            $categoryManager->delete($id);
+            header('Location:/categories');
+        }
     }
 }
 
